@@ -1,0 +1,30 @@
+<h1>PERIODIC ELEMENTS TABLE</h1>
+  {{value()}}
+
+@if (elements().length) {
+<mat-table class="elements-table" [dataSource]="elements$">
+  @for (column of TABLE_CONFIG; track column.name) {
+  <ng-container [matColumnDef]="column.name">
+    <th mat-header-cell *matHeaderCellDef>{{ column.displayName }}</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element[column.modelProperty] }}
+    </td>
+  </ng-container>
+  }
+  <tr mat-header-row *matHeaderRowDef="TABLE_COLUMNS"></tr>
+  <tr mat-row *matRowDef="let row; columns: TABLE_COLUMNS"></tr>
+</mat-table>
+
+<mat-form-field>
+  <mat-label>Filter by anything</mat-label>
+  <input matInput type="text" [(ngModel)]="value" />
+  @if (value()) {
+  <button matSuffix mat-icon-button aria-label="Clear" (click)="value.set('')">
+    <mat-icon>close</mat-icon>
+  </button>
+  }
+</mat-form-field>
+
+} @else {
+<mat-spinner class="loader"></mat-spinner>
+}
