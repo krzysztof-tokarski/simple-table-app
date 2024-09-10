@@ -1,5 +1,4 @@
 <h1>PERIODIC ELEMENTS TABLE</h1>
-  {{value()}}
 
 @if (elements().length) {
 <mat-table class="elements-table" [dataSource]="elements$">
@@ -17,9 +16,9 @@
 
 <mat-form-field>
   <mat-label>Filter by anything</mat-label>
-  <input matInput type="text" [(ngModel)]="value" />
-  @if (value()) {
-  <button matSuffix mat-icon-button aria-label="Clear" (click)="value.set('')">
+  <input matInput type="text" [formControl]="filterCtrl" />
+  @if (filteredValue()?.length) {
+  <button matSuffix mat-icon-button aria-label="Clear" (click)="onClearClick()">
     <mat-icon>close</mat-icon>
   </button>
   }
